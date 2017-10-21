@@ -12,12 +12,12 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed>
+    <v-toolbar fixed class="pink white--text">
       <v-toolbar-title v-text="title" @click="home"></v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn v-show="!loggedIn" @click="form('Login')">Login</v-btn>
-      <v-btn v-show="!loggedIn" @click="form('Sign Up')">Sign Up</v-btn>
-      <v-btn v-show="loggedIn" icon @click.stop="drawer = !drawer">
+      <!-- <v-btn v-show="!loggedIn" @click="form('Login')">Login</v-btn>
+      <v-btn v-show="!loggedIn" @click="form('Sign Up')">Sign Up</v-btn> -->
+      <v-btn icon @click.stop="drawer = !drawer">
         <v-icon>menu</v-icon>
       </v-btn>
     </v-toolbar>
@@ -92,14 +92,16 @@
         fixed: true,
         items: [
           { icon: 'home', title: 'Home', function: this.home },
-          { icon: 'account_circle', title: 'My Account', function: this.account },
-          { icon: 'web', title: 'My Vaults', function: this.myVaults },
-          { icon: 'remove_circle', title: 'Logout', function: this.logout }
+          // { icon: 'account_circle', title: 'My Account', function: this.account },
+          { icon: 'web', title: 'Cart', function: this.myVaults },
+          { icon: 'web', title: 'Login', function: this.loginForm },
+          { icon: 'web', title: 'Register', function: this.registerForm },
+          // { icon: 'remove_circle', title: 'Logout', function: this.logout }
         ],
         miniVariant: false,
         right: true,
         rightDrawer: false,
-        title: 'Keepr',
+        title: 'Changeables',
         dialog: false,
         authType: '',
         formInput: {
@@ -118,7 +120,8 @@
         this.drawer = false
       },
       account() {
-        console.log("account")
+        router.push("/account")
+        this.drawer = false
       },
       logout() {
         this.$store.dispatch('logout')
@@ -127,6 +130,16 @@
       form(authType) {
         this.authType = authType
         this.dialog = true
+      },
+      loginForm() {
+        this.authType = 'Login'
+        this.dialog = true
+        this.drawer = false
+      },
+      registerForm() {
+        this.authType = 'Sign Up'
+        this.dialog = true
+        this.drawer = false
       },
       closeDialog() {
         this.dialog = false
@@ -168,6 +181,27 @@
       },
       myVaults() {
         router.push('/vaults')
+      }
+    },
+    watch: {
+      loggedIn: function (change) {
+        if (change) {
+          var login = this.items.find(i => i.title == "Login")
+          var register = this.items.find(i => i.title == "Register")
+          var account = { icon: 'account_circle', title: 'My Account', function: this.account }
+          var logout = { icon: 'remove_circle', title: 'Logout', function: this.logout }
+          this.items.splice(this.items.indexOf(login), 1)
+          this.items.splice(this.items.indexOf(register), 1, account, logout)
+        }
+        else {
+          var logout = this.items.find(i => i.title == "Logout")
+          var account = this.items.find(i => i.title == "My Account")
+          var login = { icon: 'web', title: 'Login', function: this.loginForm }
+          var register = { icon: 'web', title: 'Register', function: this.registerForm }
+          this.items.splice(this.items.indexOf(account), 1)
+          this.items.splice(this.items.indexOf(logout), 1, login, register)
+
+        }
       }
     },
     computed: {

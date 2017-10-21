@@ -3,17 +3,17 @@
     <v-layout row wrap>
       <v-flex xs12>
         <v-card dark class="primary">
-          <v-card-text class="px-0">Top Keeps</v-card-text>
+          <v-card-text class="px-0">Featured Products</v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs4 v-for="keep in keeps">
-        <Keep :keep="keep"></Keep>
+      <v-flex xs4 v-for="product in products">
+        <Product :product="product"></Product>
       </v-flex>
     </v-layout>
-    <v-btn id="add-keep" primary fab fixed bottom right v-model="fab" @click="dialog = true">
+    <!-- <v-btn id="add-keep" primary fab fixed bottom right v-model="fab" @click="dialog = true">
       <v-icon>add</v-icon>
-    </v-btn>
-    <v-dialog v-model="dialog" persistent width="50%">
+    </v-btn> -->
+    <!-- <v-dialog v-model="dialog" persistent width="50%">
       <v-card>
         <v-card-title>
           <span class="headline">Create New Keep</span>
@@ -28,7 +28,6 @@
                 <v-text-field label="Description" v-model="description"></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <!-- <v-text-field type="file" v-model="imgUrl" accept="image/*"></v-text-field> -->
                 <v-btn @click.prevent="openCloud">Upload</v-btn>
               </v-flex>
               <v-switch label="Private" v-model="private"></v-switch>
@@ -42,12 +41,12 @@
           <v-btn class="blue--text darken-1" flat @click="createKeep">Create</v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   </v-container>
 </template>
 
 <script>
-  import Keep from './Keep'
+  import Product from './Product'
   export default {
     name: 'home',
     data() {
@@ -61,32 +60,32 @@
       }
     },
     methods: {
-      openCloud() {
-        cloudinary.openUploadWidget({ cloud_name: 'tattoo-me', upload_preset: 'tattoopng' },
-          (error, result) => {
-            this.imgUrl = result[0].secure_url
-          })
-      },
-      closeDialog() {
-        this.dialog = false,
-          this.title = '',
-          this.description = '',
-          this.imgUrl = '',
-          this.private = false
-      },
-      createKeep() {
-        var newKeep = {
-          title: this.title,
-          description: this.description,
-          url: this.imgUrl,
-          private: this.private
-        }
-        this.$store.dispatch('addKeep', newKeep)
-        this.closeDialog()
-      }
+      // openCloud() {
+      //   cloudinary.openUploadWidget({ cloud_name: 'tattoo-me', upload_preset: 'tattoopng' },
+      //     (error, result) => {
+      //       this.imgUrl = result[0].secure_url
+      //     })
+      // },
+      // closeDialog() {
+      //   this.dialog = false,
+      //     this.title = '',
+      //     this.description = '',
+      //     this.imgUrl = '',
+      //     this.private = false
+      // },
+      // createKeep() {
+      //   var newKeep = {
+      //     title: this.title,
+      //     description: this.description,
+      //     url: this.imgUrl,
+      //     private: this.private
+      //   }
+      //   this.$store.dispatch('addKeep', newKeep)
+      //   this.closeDialog()
+      // }
     },
     computed: {
-      keeps() {
+      products() {
         return this.$store.state.homeKeeps
       }
     },
@@ -94,7 +93,7 @@
       this.$store.dispatch('getKeeps')
     },
     components: {
-      Keep
+      Product
     }
   }
 

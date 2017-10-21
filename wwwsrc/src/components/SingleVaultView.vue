@@ -12,14 +12,14 @@
                 </v-card>
             </v-flex>
             <v-flex xs4 v-for="keep in activeVaultKeeps">
-                <Keep :keep="keep"></Keep>
+                <Product :keep="keep"></Product>
             </v-flex>
         </v-layout>
     </v-container>
 </template>
 
 <script>
-    import Keep from './Keep'
+    import Product from './Product'
     export default {
         name: 'SingleVaultView',
         data() {
@@ -39,7 +39,7 @@
             this.$store.dispatch('getVaultKeeps', this.$route.params.vaultId)
         },
         components: {
-            Keep
+            Product
         }
     }
 

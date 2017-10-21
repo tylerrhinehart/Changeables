@@ -24,8 +24,8 @@
 <script>
 	import router from "../router"
 	export default {
-		name: 'Keep',
-		props: ["keep"],
+		name: 'Product',
+		props: ["product"],
 		data() {
 			return {
 				items: [
