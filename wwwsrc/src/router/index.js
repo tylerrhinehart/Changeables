@@ -4,9 +4,10 @@ import Home from '@/components/Home'
 import UserVaults from '@/components/UserVaults'
 import Vault from '@/components/Vault'
 import Keep from '@/components/Product'
-import SingleKeepView from '@/components/SingleKeepView'
+import SingleProductView from '@/components/SingleProductView'
 import SingleVaultView from '@/components/SingleVaultView'
 import Dashboard from '@/components/Dashboard'
+import Cart from '@/components/Cart'
 
 
 Vue.use(Router)
@@ -17,6 +18,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/cart',
+      name: 'Cart',
+      component: Cart
     },
     {
       path: '/account',
@@ -34,9 +40,9 @@ export default new Router({
       component: SingleVaultView
     },
     {
-      path: '/keeps/:keepId',
-      name: 'SingleKeepView',
-      component: SingleKeepView
+      path: '/products/:productId',
+      name: 'SingleProductView',
+      component: SingleProductView
     }
   ]
 })

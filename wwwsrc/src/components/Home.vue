@@ -86,11 +86,11 @@
     },
     computed: {
       products() {
-        return this.$store.state.homeKeeps
+        return this.$store.state.featuredProducts
       }
     },
     mounted() {
-      this.$store.dispatch('getKeeps')
+      this.$store.dispatch('getProducts')
     },
     components: {
       Product

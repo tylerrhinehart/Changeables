@@ -25,13 +25,14 @@ var store = new vuex.Store({
     user: {},
     loggedIn: false,
     userVaults: [],
-    homeKeeps: [],
+    featuredProducts: [],
     activeVault: {},
     activeVaultKeeps: [],
-    activeKeep: {},
+    activeProduct: {},
     showBottomVaultsBar: false,
     selectedKeep: '',
-    defaultVault: ''
+    defaultVault: '',
+    cart: []
   },
 
   mutations: {
@@ -46,8 +47,11 @@ var store = new vuex.Store({
     addVault(state, payload) {
       state.userVaults.push(payload)
     },
-    findKeep(state, payload) {
-      state.activeKeep = state.homeKeeps.find(k => k._id == payload)
+    // findProduct(state, payload) {
+    //   state.activeProduct = state.featuredProducts.find(k => k._id == payload)
+    // },
+    setActiveProduct(state, payload) {
+      state.activeProduct = payload
     },
     clearActiveKeep(state) {
       state.activeKeep = {}
@@ -64,8 +68,8 @@ var store = new vuex.Store({
     findVault(state, payload) {
       state.activeVault = state.userVaults.find(v => v.id == payload)
     },
-    updateKeeps(state, payload) {
-      state.homeKeeps = payload
+    updateProducts(state, payload) {
+      state.featuredProducts = payload
     },
     updateVaults(state, payload) {
       state.userVaults = payload
@@ -93,15 +97,15 @@ var store = new vuex.Store({
       auth.post('login', payload).then((res) => {
         commit('login', res.data.data)
       })
-        .then(() => {
-          dispatch('getUserVaults')
-        })
+        // .then(() => {
+        //   dispatch('getUserVaults')
+        // })
         .catch((err) => console.error(err))
     },
     signup({ commit, dispatch }, payload) {
       auth.post('register', payload).then((res) => {
         commit('login', res.data.data)
-        dispatch('defaultVault')
+        // dispatch('defaultVault')
       })
         .catch((err) => console.error(err))
     },
@@ -118,28 +122,30 @@ var store = new vuex.Store({
         }
         commit('login', res.data.data)
       })
-        .then(() => {
-          dispatch('getUserVaults')
-        })
+        // .then(() => {
+        //   dispatch('getUserVaults')
+        // })
         .catch((err) => console.error(err))
     },
-    defaultVault({ commit, dispatch }) {
-      var vault = {
-        title: 'Created Keeps',
-        description: 'Creates that I created',
-        private: true
-      }
-      api.post('vaults', vault).then((res) => {
-        dispatch('getUserVaults')
-      })
-    },
+    // defaultVault({ commit, dispatch }) {
+    //   var vault = {
+    //     title: 'Created Keeps',
+    //     description: 'Creates that I created',
+    //     private: true
+    //   }
+    //   api.post('vaults', vault).then((res) => {
+    //     dispatch('getUserVaults')
+    //   })
+    // },
     addVault({ commit, dispatch }, payload) {
       api.post('vaults', payload).then((res) => {
         dispatch('getUserVaults')
       })
     },
-    findKeep({ commit, dispatch }, payload) {
-      commit('findKeep', payload)
+    findProduct({ commit, dispatch }, payload) {
+      api('products/' + payload).then((res) => {
+        commit('setActiveProduct', res.data.data)
+      })
     },
     clearActiveKeep({ commit, dispatch }) {
       commit(clearActiveKeep)
@@ -175,7 +181,7 @@ var store = new vuex.Store({
     },
     getProducts({ commit, dispatch }) {
       api('products').then((res) => {
-        commit('updateKeeps', res.data.data)
+        commit('updateProducts', res.data.data)
       })
         .catch((err) => console.error(err))
     },

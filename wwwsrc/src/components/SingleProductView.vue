@@ -1,11 +1,11 @@
 <template>
     <v-card>
-        <v-card-media :src="activeKeep.url" height="400px">
+        <v-card-media :src="activeProduct.url" height="400px">
         </v-card-media>
         <v-card-title class="blue white--text">
-            <span class="headline">{{activeKeep.title}}</span>
+            <span class="headline">{{activeProduct.title}}</span>
             <v-spacer></v-spacer>
-            <v-menu bottom right>
+            <v-menu bottom left>
                 <v-btn icon slot="activator" dark>
                     <v-icon>more_vert</v-icon>
                 </v-btn>
@@ -17,7 +17,7 @@
             </v-menu>
         </v-card-title>
         <v-card-text>
-            <span>{{activeKeep.description}}</span>
+            <span>{{activeProduct.description}}</span>
         </v-card-text>
         <!-- <v-card-actions>
             <v-btn flat class="orange--text">Share</v-btn>
@@ -30,44 +30,38 @@
 
 <script>
     export default {
-        name: 'SingleKeepView',
+        name: 'SingleProductView',
         data() {
             return {
                 items: [
-                    {
-                        title: 'Keep',
-                        function: this.selectKeep
-                    },
-                    {
-                        title: 'Share',
-                        function: ''
-                    }
+                    { title: 'Add to Cart', function: this.selectProduct },
+                    { title: 'Share', function: '' }
                 ]
             }
         },
         methods: {
-            selectKeep() {
+            selectProduct() {
                 this.$store.dispatch('showBottomVaultsBar')
             },
-            deleteKeep() {
-                this.$store.dispatch('deleteKeep', this.keep._id)
-            }
+            // deleteKeep() {
+            //     this.$store.dispatch('deleteKeep', this.keep._id)
+            // }
         },
         computed: {
-            activeKeep() {
-                return this.$store.state.activeKeep
+            activeProduct() {
+                return this.$store.state.activeProduct
             }
         },
         mounted() {
-            this.$store.dispatch('findKeep', this.$route.params.keepId)
-            this.$store.dispatch('incrementKeep', this.$route.params.keepId)
-            if (this.$store.state.user._id == this.activeKeep.creatorId) {
-                var remove = {
-                    title: 'Remove',
-                    function: this.deleteKeep
-                }
-                this.items.push(remove)
-            }
+            this.$store.dispatch('findProduct', this.$route.params.productId)
+            // this.$store.dispatch('incrementKeep', this.$route.params.keepId)
+            // if (this.$store.state.user._id == this.activeKeep.creatorId) {
+            //     var remove = {
+            //         title: 'Remove',
+            //         function: this.deleteKeep
+            //     }
+            //     this.items.push(remove)
+            // }
         }
     }
 

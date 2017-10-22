@@ -74,7 +74,7 @@
       </v-dialog>
     </v-layout>
     <v-footer id="footer" :fixed="fixed">
-      <span>Keepr &copy; 2017</span>
+      <span>Changeables &copy; 2017</span>
     </v-footer>
     <BottomVaultsBar></BottomVaultsBar>
   </v-app>
@@ -93,7 +93,7 @@
         items: [
           { icon: 'home', title: 'Home', function: this.home },
           // { icon: 'account_circle', title: 'My Account', function: this.account },
-          { icon: 'web', title: 'Cart', function: this.myVaults },
+          { icon: 'web', title: 'Cart', function: this.cart },
           { icon: 'web', title: 'Login', function: this.loginForm },
           { icon: 'web', title: 'Register', function: this.registerForm },
           // { icon: 'remove_circle', title: 'Logout', function: this.logout }
@@ -179,8 +179,8 @@
         this.$store.dispatch('signup', signupForm)
         this.closeDialog()
       },
-      myVaults() {
-        router.push('/vaults')
+      cart() {
+        router.push('/cart')
       }
     },
     watch: {

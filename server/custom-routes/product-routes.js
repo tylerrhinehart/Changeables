@@ -1,44 +1,65 @@
-let Vaults = require('../models/vault')
-let Keeps = require('../models/keep')
+let Products = require('../models/product')
 
 module.exports = {
-    getPublicKeeps: {
-        path: '/keeps/public/get',
+    getProducts: {
+        path: '/products/',
         reqType: 'get',
         method(req, res, next) {
-            let action = 'Get public keeps'
-            Keeps.find({ private: false })
-                .then(keeps => {
-                    res.send(handleResponse(action, keeps))
+            let action = 'Get Products'
+            Products.find({})
+                .then(products => {
+                    res.send(handleResponse(action, products))
                 })
                 .catch(error => {
                     return next(handleResponse(action, null, error))
                 })
         }
     },
-    // createKeep: {
-    //     path: '/keeps',
-    //     reqType: 'post',
-    //     method(req, res, next) {
-    //         let action = 'Create New Keep'
-    //         let model = new schema(req.body)
-    //         model.creatorId = req.session.uid
-
-    //         model.save()
-    //             .then(data => {
-    //                 return res.send(handleResponse(action, data))
-    //             })
-    //             .catch(error => {
-    //                 return next(handleResponse(action, null, error))
-    //             })
-    //     }
-    // },
+    findProduct: {
+        path: '/products/:productId',
+        reqType: 'get',
+        method(req, res, next) {
+            let action = 'Get Products'
+            Products.findById(req.params.productId)
+                .then(product => {
+                    res.send(handleResponse(action, product))
+                })
+                .catch(error => {
+                    return next(handleResponse(action, null, error))
+                })
+        }
+    },
+    createProduct: {
+        path: '/products',
+        reqType: 'post',
+        method(req, res, next) {
+            let action = 'Create New Product'
+            var product = req.body
+            product.creatorId = req.session.uid
+            Products.create(product)
+                .then(product => {
+                    res.send(handleResponse(action, product))
+                })
+                .catch(error => {
+                    return next(handleResponse(action, null, error))
+                })
+            // let model = new schema(req.body)
+            // model.creatorId = req.session.uid
+            // model.save()
+            //     .then(data => {
+            //         return res.send(handleResponse(action, data))
+            //     })
+            //     .catch(error => {
+            //         return next(handleResponse(action, null, error))
+            //     })
+        }
+    },
     incrementKeep: {
         path: '/keeps/increment/:keepId',
         reqType: 'post',
         method(req, res, next) {
             let action = 'Increment Keep Adds'
-            Keeps.findById(req.params.keepId)
+            Products.findById(req.params.keepId)
                 .then(keep => {
                     keep.adds++
                     keep.save()

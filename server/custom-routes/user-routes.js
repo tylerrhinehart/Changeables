@@ -1,32 +1,31 @@
-let Vaults = require('../models/vault')
-let Keeps = require('../models/keep')
+let Products = require('../models/product')
 
 module.exports = {
-  userBoards: {
-    path: '/uservaults',
-    reqType: 'get',
-    method(req, res, next) {
-      let action = 'Find User Vaults'
-  Vaults.find({ creatorId: req.session.uid })
-        .then(vaults => {
-          res.send(handleResponse(action, vaults))
-        }).catch(error => {
-          return next(handleResponse(action, null, error))
-        })
-    }
-  },
-  sharedBoards: {
-    path: '/sharedBoards',
-    reqType: 'get',
-    method(req, res, next) {
-      Vaults.find({ collaborators: { $in: req.session.uid } })
-        .then(vaults => {
-          res.send(handleResponse(action, vaults))
-        }).catch(error => {
-          return next(handleResponse(action, null, error))
-        })
-    }
-  }
+  // userBoards: {
+  //   path: '/uservaults',
+  //   reqType: 'get',
+  //   method(req, res, next) {
+  //     let action = 'Find User Vaults'
+  //     Vaults.find({ creatorId: req.session.uid })
+  //       .then(vaults => {
+  //         res.send(handleResponse(action, vaults))
+  //       }).catch(error => {
+  //         return next(handleResponse(action, null, error))
+  //       })
+  //   }
+  // },
+  // sharedBoards: {
+  //   path: '/sharedBoards',
+  //   reqType: 'get',
+  //   method(req, res, next) {
+  //     Vaults.find({ collaborators: { $in: req.session.uid } })
+  //       .then(vaults => {
+  //         res.send(handleResponse(action, vaults))
+  //       }).catch(error => {
+  //         return next(handleResponse(action, null, error))
+  //       })
+  //   }
+  // }
 }
 
 

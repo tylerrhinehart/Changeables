@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<v-card>
-			<v-card-media :src="keep.url" height="200px" @click="singleView">
+			<v-card-media :src="product.url" height="200px" @click="singleView">
 			</v-card-media>
 			<v-card-title class="blue white--text">
-				<span class="headline">{{keep.title}}</span>
+				<span class="headline">{{product.title}}</span>
 				<v-spacer></v-spacer>
 				<v-menu bottom right>
 					<v-btn icon slot="activator" dark>
@@ -29,24 +29,15 @@
 		data() {
 			return {
 				items: [
-					{
-						title: 'Keep',
-						function: this.selectKeep
-					},
-					{
-						title: 'Full Size',
-						function: this.singleView
-					},
-					{
-						title: 'Share',
-						function: ''
-					}
+					{ title: 'Keep', function: this.selectKeep },
+					{ title: 'Full Size', function: this.singleView },
+					{ title: 'Share', function: '' }
 				]
 			}
 		},
 		methods: {
 			singleView() {
-				router.push('/keeps/' + this.keep._id)
+				router.push('/products/' + this.product._id)
 			},
 			selectKeep() {
 				this.$store.dispatch('selectKeep', this.keep._id)
@@ -57,13 +48,13 @@
 			}
 		},
 		mounted() {
-			if (this.$store.state.user._id == this.keep.creatorId) {
-				var remove = {
-					title: 'Remove',
-					function: this.deleteKeep
-				}
-				this.items.push(remove)
-			}
+			// if (this.$store.state.user._id == this.keep.creatorId) {
+			// 	var remove = {
+			// 		title: 'Remove',
+			// 		function: this.deleteKeep
+			// 	}
+			// 	this.items.push(remove)
+			// }
 		}
 	}
 

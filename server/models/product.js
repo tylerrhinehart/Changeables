@@ -6,10 +6,10 @@ var schema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String },
     url: { type: String },
-    private: { type: Boolean, default: false },
+    price: { type: Number, required: true },
+    quantity: { type: Number, required: true },
     created: { type: Number, default: Date.now() },
     creatorId: { type: ObjectId, ref: models.user.name, required: true },
-    adds: { type: Number, default: 0 }
 });
 
-module.exports = mongoose.model(models.keep.name, schema);
+module.exports = mongoose.model(models.product.name, schema);
