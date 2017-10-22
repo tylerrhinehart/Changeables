@@ -6,7 +6,7 @@
 			<v-card-title class="blue white--text">
 				<span class="headline">{{product.title}}</span>
 				<v-spacer></v-spacer>
-				<v-menu bottom right>
+				<v-menu bottom left>
 					<v-btn icon slot="activator" dark>
 						<v-icon>more_vert</v-icon>
 					</v-btn>
@@ -29,7 +29,7 @@
 		data() {
 			return {
 				items: [
-					{ title: 'Keep', function: this.selectKeep },
+					{ title: 'Add to Cart', function: this.addToCart },
 					{ title: 'Full Size', function: this.singleView },
 					{ title: 'Share', function: '' }
 				]
@@ -39,12 +39,12 @@
 			singleView() {
 				router.push('/products/' + this.product._id)
 			},
-			selectKeep() {
-				this.$store.dispatch('selectKeep', this.keep._id)
+			addToCart() {
+				this.$store.dispatch('addToCart', this.product._id)
 				this.$store.dispatch('showBottomVaultsBar')
 			},
 			deleteKeep() {
-				this.$store.dispatch('deleteKeep', this.keep._id)
+				this.$store.dispatch('deleteKeep', this.product._id)
 			}
 		},
 		mounted() {

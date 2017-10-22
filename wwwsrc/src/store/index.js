@@ -89,6 +89,9 @@ var store = new vuex.Store({
     updateKeep(state, payload) {
       var index = state.homeKeeps.findIndex(k => k._id == payload._id)
       state.homeKeeps.splice(index, 1, payload)
+    },
+    addToCart(state, payload) {
+      state.cart.push(payload)
     }
   },
 
@@ -194,6 +197,9 @@ var store = new vuex.Store({
     },
     selectKeep({ commit, dispatch }, payload) {
       commit('selectKeep', payload)
+    },
+    addToCart({ commit, dispatch }, payload) {
+      commit('addToCart', payload)
     },
     setActiveVault({ commit, dispatch }, payload) {
       commit('setActiveVault', payload)
